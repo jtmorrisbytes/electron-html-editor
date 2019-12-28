@@ -36,7 +36,11 @@ class Layout extends HTMLElement {
 
     }
     connectedCallback(){
-        this.style.display = this.layout;
+        document.addEventListener('DOMContentLoaded',(event)=>{
+            this.style.display = this.layout;
+            this.style.backgroundColor = "black"
+        })
+        
         console.log("A layout was connected to the DOM")
         
     }
