@@ -1,7 +1,15 @@
 
-// class GridElement extends Object {
-//     constructor()
-// }
+class GridLine extends Object {
+    name;
+    width;
+    minWidth;
+    units;
+    validUnits = ['em', 'rm', 'px', '%']
+    
+    constructor() {
+
+    }
+}
 
 
 class GridLayout extends HTMLElement {

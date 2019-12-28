@@ -2,6 +2,17 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const ipcMain = require('electron').ipcMain
+
+// init electron reload if exists
+try  {
+  require('electron')(__dirname)
+}
+catch{
+  // do nothing
+}
+
+
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -56,5 +67,5 @@ console.log("TESTING 123 FROM MAIN")
 const EditorViewportMain =require('./editor-viewport/main-process')
 
 ipcMain.on("hello-world",function replyToApplication(event,args){
-  console.log("recieved hello world event")
+  // console.log("recieved hello world event")
 })
