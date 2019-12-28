@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
-
+const ipcMain = require('electron').ipcMain
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -15,7 +15,7 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-
+  
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 
@@ -29,6 +29,7 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+  mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -51,3 +52,9 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+console.log("TESTING 123 FROM MAIN")
+const EditorViewportMain =require('./editor-viewport/main-process')
+
+ipcMain.on("hello-world",function replyToApplication(event,args){
+  console.log("recieved hello world event")
+})
