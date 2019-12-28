@@ -20,4 +20,4 @@ window.addEventListener("DOMContentLoaded",
     }
 
 )
-window.addEventListener()
+const Layout = require('./layout')
