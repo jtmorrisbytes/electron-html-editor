@@ -14,9 +14,7 @@ const editorViewportChannel = require("./common").channel
 console.log()
 
 
-
-
-                ipcMain.on(editorViewportChannel,function (EditorViewportEvent,args){
-            console.log(EditorViewportEvent,args)
-        })
+ ipcMain.on(editorViewportChannel,function (EditorViewportEvent,args){
+    console.log(EditorViewportEvent,args)
+})
 
