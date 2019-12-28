@@ -20,4 +20,4 @@ window.addEventListener("DOMContentLoaded",
     }
 
 )
-const Layout = require('./layout')
+const GridLayout = require("./layout/grid")

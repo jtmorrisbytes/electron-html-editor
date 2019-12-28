@@ -59,7 +59,11 @@ if (((window || {}).customElements || {}).define) {
 // add to module.exports if availible
 
 if((module || {}).exports) {
-    module.exports = Layout
+    module.exports = {
+        default: layout,
+        layout,
+        GridLayout: require("./grid").GridLayout
+    }
 }
 else {
     // try {
