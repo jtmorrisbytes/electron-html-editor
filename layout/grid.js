@@ -1,13 +1,45 @@
 
-class GridLine extends Object {
-    name;
-    width;
-    minWidth;
-    units;
-    validUnits = ['em', 'rm', 'px', '%']
-    
-    constructor() {
 
+/*
+  RegEx for GridLine:
+    /(\d*\.?\d+)\s?(px|em|ex|%|in|cn|mm|pt|pc+)/igm
+    credits https://regexr.com/39424
+
+*/
+
+
+
+class GridLine extends Object {
+    static defaultWidth = 'auto'
+    name;
+    width= 'auto';
+    minWidth;
+    unit;
+    supportedUnits = ['em', 'rm', 'px', '%']
+    
+    constructor(width) {
+        super()
+        if (!width) {
+            throw TypeError("Class GridLine requires argument width, got:", width)
+        }
+        else if(width === 'auto' ) {
+            this.width = width
+        }
+        else {
+            var re = new RegExp(/(\d*\.?\d+)\s?(px|em|ex|%|in|cn|mm|pt|pc+)/igm)
+            var match = re.exec(width)
+            this.width = match[1]
+            this.unit = match[2]
+        }
+        
+    }
+    getCssWidth() {
+        if (this.width ==='auto') {
+            return this.width;
+        }
+        else {
+            return String(this.width).concat(this.unit)
+        }
     }
 }
 
@@ -15,14 +47,14 @@ class GridLine extends Object {
 class GridLayout extends HTMLElement {
     static tagName = 'grid-layout'
     numColumns = 1
-    defaultNumColumns = 1
-    defualtNumRows = 1
     numRows = 1
+    rows = [new GridLine('auto')]
+    columns = [new GridLine('auto')]
     constructor() {
         super()
 
-            this.numColumns = Number(this.getAttribute('numColumns')) || this.defaultNumColumns;
-            this.numRows = Number(this.getAttribute('numRows')) || this.defualtNumRows;
+            this.numColumns = Number(this.getAttribute('numColumns')) || this.numColumns
+            this.numRows = Number(this.getAttribute('numRows')) || this.numRows
             console.log("Grid Layout is being constructed")
     }
     setDefaultStyles() {
@@ -30,9 +62,28 @@ class GridLayout extends HTMLElement {
         this.style.height = "100%"
         this.style.display = "grid"
     }
+    initGrid() {
+        console.log("initGrid")
+        let cssRows = "";
+        for (var rowNum = 0; rowNum < this.rows.length; rowNum++) {
+            cssRows.concat(`${this.rows[rowNum].getCssWidth()}`)
+            console.log("CssRows Build Progress: ",rowNum,cssRows)
+        }
+        console.log("initRows:", String(cssRows))
+        this.style.gridTemplateRows = cssRows;
+
+
+
+        // this.style.gridTemplateRows = 
+        // `${this.rows[0].getCssWidth()} \
+        //  ${this.rows[n].getCssWidth()}
+        // `
+    }
     connectedCallback() {
 
         window.addEventListener('DOMContentLoaded', this.setDefaultStyles.bind(this))
+        window.addEventListener("DOMContentLoaded", this.initGrid.bind(this))
+
         console.log("grid style:", window.getComputedStyle(this))
 
     }
