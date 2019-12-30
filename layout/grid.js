@@ -49,7 +49,7 @@ class GridLayout extends HTMLElement {
     numColumns = 1
     numRows = 1
     rows = [new GridLine('auto')]
-    columns = [new GridLine('auto')]
+    columns = [new GridLine('auto'), new GridLine('auto')]
     constructor() {
         super()
 
@@ -72,8 +72,8 @@ class GridLayout extends HTMLElement {
         }
 
         this.style.gridTemplateColumns = "";
-        for (var columnNum = 0; columnNum < this.rows.length; columnNum++) {
-            this.style.gridTemplateColumns = this.style.gridTemplateColumns.concat(`${this.rows[columnNum].getCssWidth() }`)
+        for (var columnNum = 0; columnNum < this.columns.length; columnNum++) {
+            this.style.gridTemplateColumns = this.style.gridTemplateColumns.concat(`${this.columns[columnNum].getCssWidth() }`)
             console.log("CssColumns Build Progress: ",columnNum,this.style.gridTemplateColumns)
         }
         // init the columns
