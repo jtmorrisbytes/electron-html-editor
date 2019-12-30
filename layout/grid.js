@@ -64,13 +64,20 @@ class GridLayout extends HTMLElement {
     }
     initGrid() {
         console.log("initGrid")
-        let cssRows = "";
+        // init the rows
+        this.style.gridTemplateRows = "";
         for (var rowNum = 0; rowNum < this.rows.length; rowNum++) {
-            cssRows.concat(`${this.rows[rowNum].getCssWidth()}`)
-            console.log("CssRows Build Progress: ",rowNum,cssRows)
+            this.style.gridTemplateRows = this.style.gridTemplateRows.concat(`${this.rows[rowNum].getCssWidth() }`)
+            console.log("CssRows Build Progress: ",rowNum,this.style.gridTemplateRows)
         }
-        console.log("initRows:", String(cssRows))
-        this.style.gridTemplateRows = cssRows;
+
+        this.style.gridTemplateColumns = "";
+        for (var columnNum = 0; columnNum < this.rows.length; columnNum++) {
+            this.style.gridTemplateColumns = this.style.gridTemplateColumns.concat(`${this.rows[columnNum].getCssWidth() }`)
+            console.log("CssColumns Build Progress: ",columnNum,this.style.gridTemplateColumns)
+        }
+        // init the columns
+        console.log("initColumns:", String(this.style.gridTemplateColumns))
 
 
 
@@ -84,7 +91,7 @@ class GridLayout extends HTMLElement {
         window.addEventListener('DOMContentLoaded', this.setDefaultStyles.bind(this))
         window.addEventListener("DOMContentLoaded", this.initGrid.bind(this))
 
-        console.log("grid style:", window.getComputedStyle(this))
+        console.log("grid style:", window.getComputedStyle(this).gridTemplateRows)
 
     }
 }
