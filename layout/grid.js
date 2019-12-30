@@ -26,7 +26,7 @@ class GridLine extends Object {
             this.width = width
         }
         else {
-            var re = new RegExp(/(\d*\.?\d+)\s?(px|em|ex|%|in|cn|mm|pt|pc+)/igm)
+            var re = new RegExp(/(\d*\.?\d+)\s?(px|em|ex|fr|%|in|cn|mm|pt|pc|vw|vh+)/igm)
             var match = re.exec(width)
             this.width = match[1]
             this.unit = match[2]
@@ -49,7 +49,7 @@ class GridLayout extends HTMLElement {
     numColumns = 1
     numRows = 1
     rows = [new GridLine('auto')]
-    columns = [new GridLine('auto'), new GridLine('auto')]
+    columns = [new GridLine('auto')]
     constructor() {
         super()
 
@@ -73,7 +73,7 @@ class GridLayout extends HTMLElement {
 
         this.style.gridTemplateColumns = "";
         for (var columnNum = 0; columnNum < this.columns.length; columnNum++) {
-            this.style.gridTemplateColumns = this.style.gridTemplateColumns.concat(`${this.columns[columnNum].getCssWidth() }`)
+            this.style.gridTemplateColumns = this.style.gridTemplateColumns.concat(` ${this.columns[columnNum].getCssWidth() }`)
             console.log("CssColumns Build Progress: ",columnNum,this.style.gridTemplateColumns)
         }
         // init the columns
@@ -85,6 +85,7 @@ class GridLayout extends HTMLElement {
         // `${this.rows[0].getCssWidth()} \
         //  ${this.rows[n].getCssWidth()}
         // `
+        window.removeEventListener("DOMContentLoaded",this.initGrid.bind(this)) // ensure that initgrid is only called once
     }
     connectedCallback() {
 
